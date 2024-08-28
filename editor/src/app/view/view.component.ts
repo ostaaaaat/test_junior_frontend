@@ -1,45 +1,124 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../service/storage-service';
 import { Task } from '../model/task';
-import { NbMenuItem } from '@nebular/theme';
+import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { ItemCardComponent } from '../item-card/item-card.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.css']
 })
-export class ViewComponent {
+export class ViewComponent implements OnInit {
   items: Task[] = [];
+  allItems: Task[] = [];
 
   menuItems: NbMenuItem[] = [
     { title: 'Вверх', data: 'up' },
     { title: 'Вниз', data: 'down' },
   ];
 
-  nameFilter: string = '';
-  dateFrom: Date | null = null;
-  dateTo: Date | null = null;
+  filterForm: FormGroup;
+  filters = {
+    name: null,
+    dueDateFrom: null,
+    dueDateTo: null
+  }
 
-  onMenuItemClick(event: any, item: any) {
-    const action = event.item.data;
-    if (action === 'up') {
-      this.moveItemUp(item);
-    } else if (action === 'down') {
-      this.moveItemDown(item);
+  constructor(private storageService: StorageService, private dialogService: NbDialogService, private nbMenuService: NbMenuService) {
+    this.allItems = storageService.getTasks();
+    this.items = [...this.allItems];
+    this.filterForm = new FormGroup({
+      name: new FormControl(null),
+      dueDateFrom: new FormControl<moment.Moment | null>(null),
+      dueDateTo: new FormControl<moment.Moment | null>(null)
+    });
+    this.filterForm.get('name')?.valueChanges.subscribe(val => {
+      this.filters.name = val;
+      this.applyFilters();
+    });
+    this.filterForm.get('dueDateFrom')?.valueChanges.subscribe(val => {
+      this.filters.dueDateFrom = val;
+      this.applyFilters();
+    });
+    this.filterForm.get('dueDateTo')?.valueChanges.subscribe(val => {
+      this.filters.dueDateTo = val;
+      this.applyFilters();
+    });
+  }
+
+  applyFilters() {
+    this.items = [...this.allItems]
+    if (this.filters.name) {
+      this.items = this.items.filter(task => task.name.includes(this.filters.name!))
+    }
+    if (this.filters.dueDateFrom) {
+      this.items = this.items.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isAfter(this.filters.dueDateFrom))
+    }
+    if (this.filters.dueDateTo) {
+      this.items = this.items.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isBefore(this.filters.dueDateTo));
     }
   }
 
-  moveItemUp(item: any) {
-    
+  clearForm() {
+    this.filterForm.setValue({
+      name: null,
+      dueDateFrom: null,
+      dueDateTo: null
+    })
+    this.filters = {
+      name: null,
+      dueDateFrom: null,
+      dueDateTo: null
+    }
+    this.items = [...this.allItems];
   }
 
-  moveItemDown(item: any) {
-    
+  viewTask(task: Task) {
+    console.log(task)
+    this.dialogService.open(ItemCardComponent, {
+      context: {
+        readOnly: true,
+        task: task
+      }
+    });
   }
 
-  constructor(private storageService: StorageService) {
-    this.items = storageService.getTasks();
-   }
+  onMenuItemClick(action: string, i: number) {
+    if (action === 'up') {
+      this.moveItemUp(i);
+    } else if (action === 'down') {
+      this.moveItemDown(i);
+    }
+  }
+
+  moveItemUp(i: number) {
+    console.log(i)
+    if (i > 0) {
+      let a = this.allItems[i];
+      this.allItems[i] = this.allItems[i - 1];
+      this.allItems[i - 1] = a;
+      this.applyFilters()
+    }
+  }
+
+  moveItemDown(i: number) {
+    if (i < this.allItems.length - 1) {
+      let a = this.allItems[i];
+      this.allItems[i] = this.allItems[i + 1];
+      this.allItems[i + 1] = a;
+      this.applyFilters()
+    }
+  }
+
+  ngOnInit() {
+    this.nbMenuService.onItemClick()
+      .subscribe(event => this.onMenuItemClick(event.item.data, Number(event.tag)));
+  }
+
 
 
 }

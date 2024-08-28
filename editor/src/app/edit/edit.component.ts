@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
-import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { Task } from '../model/task';
 import { StorageService } from '../service/storage-service';
+import { ItemCardComponent } from '../item-card/item-card.component';
 
 
 @Component({
@@ -19,9 +19,9 @@ export class EditComponent {
   }
 
   openAddItemDialog() {
-    this.dialogService.open(AddDialogComponent).onClose.subscribe(newItem => {
-      if (newItem) {
-        this.items.push(newItem);
+    this.dialogService.open(ItemCardComponent, {
+      context: {
+        readOnly: false
       }
     });
   }

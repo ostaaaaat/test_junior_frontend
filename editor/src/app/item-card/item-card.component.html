@@ -1,5 +1,5 @@
 <nb-card>
-    <nb-card-header>Добавить элемент</nb-card-header>
+    <nb-card-header *ngIf="!readOnly">Добавить элемент</nb-card-header>
     <nb-card-body>
         <form [formGroup]="taskForm">
             <div class="form-group">
@@ -14,10 +14,10 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <input nbInput id="description" name="description" placeholder="Введите описание"
-                formControlName="description">
+                    formControlName="description">
             </div>
             <div class="button-group">
-                <button nbButton status="info" (click)="save()">Сохранить</button>
+                <button *ngIf="!readOnly" nbButton status="info" (click)="save()">Сохранить</button>
                 <button nbButton status="basic" (click)="close()">Отмена</button>
             </div>
         </form>

@@ -14,9 +14,9 @@ import { NbThemeModule, NbLayoutModule, NbButtonModule,
   NbMenuModule, 
   NbIconModule} from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
-import { AddDialogComponent } from './add-dialog/add-dialog.component';
 import { StorageService } from './service/storage-service';
 import { NbMomentDateModule } from '@nebular/moment';
+import { ItemCardComponent } from './item-card/item-card.component';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { NbMomentDateModule } from '@nebular/moment';
     EditComponent,
     ViewComponent,
     ItemComponent,
-    AddDialogComponent,
+    ItemCardComponent,
   
   ],
   imports: [

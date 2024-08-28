@@ -1,44 +1,56 @@
-<nb-card>
-    <nb-card-header>Список элементов</nb-card-header>
-    <nb-card-body>
-        <div class="filter-container">
-            <div class="filter-item">
-                <label for="nameFilter">Наименование:</label>
-                <input nbInput id="nameFilter" type="text" [(ngModel)]="nameFilter" placeholder="Фильтр по наименованию">
-            </div>
-
-            <div class="filter-item">
-                <label for="dateFrom">Дата выполнения с:</label>
-                <input nbInput id="dateFrom" type="date" [(ngModel)]="dateFrom" >
-            </div>
-
-            <div class="filter-item">
-                <label for="dateTo">Дата выполнения по:</label>
-                <input nbInput id="dateTo" type="date" [(ngModel)]="dateTo">
-            </div>
-        </div>
-        <table class="custom-table">
-            <thead>
-                <tr>
-                    <th>Наименование</th>
-                    <th>Дата и время создания</th>
-                    <th>Дата и время выполнения</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of items">
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.createDate }}</td>
-                    <td>{{ item.dueDate }}</td>
-                    <td class="centered-button">
-                        <button nbButton size="small" [nbContextMenu]="menuItems"
-                            (menuItemClick)="onMenuItemClick($event, item)">
-                            ˅
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </nb-card-body>
-</nb-card>
+<nb-layout>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-header>Список элементов</nb-card-header>
+            <nb-card-body>
+                <div class="filter-container" >
+                    <form [formGroup]="filterForm">
+                        <div class="filter-item">
+                            <label for="nameFilter">Наименование:</label>
+                            <input nbInput id="name" name="name" placeholder="Введите наименование" formControlName="name" required>
+                        </div>
+    
+                        <div class="filter-item">
+                            <label for="dateFrom">Дата выполнения с:</label>
+                            <input nbInput [nbDatepicker]="datepickerFrom" formControlName="dueDateFrom">
+                            <nb-datepicker #datepickerFrom format="DD-MM-yyyy"></nb-datepicker>
+                        </div>
+    
+                        <div class="filter-item">
+                            <label for="dateTo">Дата выполнения по:</label>
+                            <input nbInput [nbDatepicker]="datepickerTo" formControlName="dueDateTo">
+                            <nb-datepicker #datepickerTo format="DD-MM-yyyy"></nb-datepicker>                    
+                        </div>
+                    </form>
+                    <div class="filter-item">
+                        <button nbButton (click)="clearForm()">
+                                    Очистить фильтры
+                        </button>          
+                    </div>
+                </div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Дата и время создания</th>
+                            <th>Дата и время выполнения</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items; index  as i" >
+                            <td (click)="viewTask(item)">{{ item.name }}</td>
+                            <td (click)="viewTask(item)">{{ item.createDate }}</td>
+                            <td (click)="viewTask(item)">{{ item.dueDate }}</td>
+                            <td class="centered-button" >
+                                <button nbButton size="small" [nbContextMenu]="menuItems" nbContextMenuTag="{{i}}">
+                                    ˅
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+</nb-layout>
