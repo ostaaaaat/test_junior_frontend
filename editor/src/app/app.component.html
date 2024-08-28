@@ -1,0 +1,13 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <div class="header-content">
+      <button nbButton status="info" routerLink="/view">Просмотр</button>
+      <button nbButton status="info" routerLink="/edit">Редактор</button>
+      <button nbButton status="basic">РУС</button>
+      <button nbButton status="basic">ENG</button>
+    </div>
+  </nb-layout-header>
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+</nb-layout>

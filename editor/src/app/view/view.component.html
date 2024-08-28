@@ -1,0 +1,44 @@
+<nb-card>
+    <nb-card-header>Список элементов</nb-card-header>
+    <nb-card-body>
+        <div class="filter-container">
+            <div class="filter-item">
+                <label for="nameFilter">Наименование:</label>
+                <input nbInput id="nameFilter" type="text" [(ngModel)]="nameFilter" placeholder="Фильтр по наименованию">
+            </div>
+
+            <div class="filter-item">
+                <label for="dateFrom">Дата выполнения с:</label>
+                <input nbInput id="dateFrom" type="date" [(ngModel)]="dateFrom" >
+            </div>
+
+            <div class="filter-item">
+                <label for="dateTo">Дата выполнения по:</label>
+                <input nbInput id="dateTo" type="date" [(ngModel)]="dateTo">
+            </div>
+        </div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Дата и время создания</th>
+                    <th>Дата и время выполнения</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.createDate }}</td>
+                    <td>{{ item.dueDate }}</td>
+                    <td class="centered-button">
+                        <button nbButton size="small" [nbContextMenu]="menuItems"
+                            (menuItemClick)="onMenuItemClick($event, item)">
+                            ˅
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </nb-card-body>
+</nb-card>

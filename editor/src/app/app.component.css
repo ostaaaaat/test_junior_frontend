@@ -1,0 +1,8 @@
+nb-layout-header {
+    background-color: #aeceee;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  button {
+    margin-right: 10px;
+  }

@@ -1,0 +1,18 @@
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
