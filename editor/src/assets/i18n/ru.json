@@ -15,7 +15,8 @@
         "description": "Описание",
         "phDescription": "Введите описание",
         "saveBtn": "Сохранить",
-        "canselBtn": "Отмена"
+        "canselBtn": "Отмена",
+        "error" : "Поле ввода не может быть пустым"
     },
     "view": {
         "header": "Список элементов",

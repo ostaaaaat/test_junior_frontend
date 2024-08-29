@@ -4,7 +4,11 @@
         <form [formGroup]="taskForm">
             <div class="form-group">
                 <label for="name">{{ 'itemCard.name' | translate }}</label>
-                <input nbInput id="name" name="name" placeholder="{{ 'itemCard.phName' | translate }}" formControlName="name" required>
+                <input nbInput id="name" name="name" placeholder="{{ 'itemCard.phName' | translate }}"
+                    formControlName="name" required>
+                <div *ngIf="taskForm.controls['name'].invalid && taskForm.controls['name'].touched" class="error">
+                    {{ 'itemCard.error' | translate }}
+                </div>
             </div>
             <div class="form-group">
                 <label for="duedate">{{ 'itemCard.dueDate' | translate }}</label>
@@ -13,11 +17,15 @@
             </div>
             <div class="form-group">
                 <label for="description">{{ 'itemCard.description' | translate }}</label>
-                <input nbInput id="description" name="description" placeholder="{{ 'itemCard.phDescription' | translate }}"
-                    formControlName="description">
+                <input nbInput id="description" name="description"
+                    placeholder="{{ 'itemCard.phDescription' | translate }}" formControlName="description">
+                <div *ngIf="taskForm.controls['description'].invalid && taskForm.controls['description'].touched" class="error">
+                    {{ 'itemCard.error' | translate }}
+                </div>
             </div>
             <div class="button-group">
-                <button *ngIf="!readOnly" nbButton status="info" (click)="save()">{{ 'itemCard.saveBtn' | translate }}</button>
+                <button *ngIf="!readOnly" nbButton status="info" (click)="save()">{{ 'itemCard.saveBtn' | translate
+                    }}</button>
                 <button nbButton status="basic" (click)="close()">{{ 'itemCard.canselBtn' | translate }}</button>
             </div>
         </form>

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { StorageService } from '../service/storage-service';
 import { Task } from '../model/task'
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
@@ -48,8 +48,12 @@ export class ItemCardComponent {
 
     this.taskForm = new FormGroup({
       dueDate: new FormControl<moment.Moment>(moment()),
-      name: new FormControl(''),
-      description: new FormControl('')
+      name: new FormControl('',  [
+        Validators.required,
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+      ])
     });
   }
 
@@ -57,6 +61,10 @@ export class ItemCardComponent {
 
 
   save() {
+    if (this.taskForm.invalid) {
+      this.taskForm.markAllAsTouched();
+      return;
+    }
     let task: Task = {
       name: this.taskForm.value.name!,
       createDate: moment().format('DD.MM.yyyy HH:mm'),

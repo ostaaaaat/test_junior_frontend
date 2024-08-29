@@ -1,3 +1,13 @@
+.filter-container {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.filter-item input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .custom-table {
   width: 100%;
   border-collapse: collapse;
@@ -25,37 +35,3 @@
   background-color: #ecf3fa;
 }
 
-.filter-container {
-  display: flex;
-  flex-wrap: wrap; 
-  gap: 16px; 
-  margin-bottom: 16px;
-}
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 200px; 
-}
-
-.filter-item label {
-  margin-bottom: 4px; 
-}
-
-.filter-item input {
-  width: 100%; 
-  box-sizing: border-box; 
-}
-
-
-@media (max-width: 600px) {
-  .filter-container {
-    flex-direction: column; 
-    gap: 8px; 
-  }
-
-  .filter-item {
-    flex: 1 1 auto; 
-    margin-bottom: 8px;
-  }
-}

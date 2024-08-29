@@ -15,7 +15,8 @@
         "description": "Description",
         "phDescription": "Enter a description",
         "saveBtn": "Save",
-        "canselBtn": "Cansel"
+        "canselBtn": "Cansel",
+        "error" : "The input field can't be empty"
     },
     "view": {
         "header": "List of item",
