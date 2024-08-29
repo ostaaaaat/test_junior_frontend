@@ -12,7 +12,7 @@ import { NbThemeModule, NbLayoutModule, NbButtonModule,
   NbDialogModule, NbDatepickerModule, NbTimepickerModule, 
   NbCardModule, NbInputModule, NbContextMenuModule,
   NbMenuModule, 
-  NbIconModule} from '@nebular/theme';
+  NbIconModule, NbToastrModule, NbToastrService} from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { StorageService } from './service/storage-service';
 import { NbMomentDateModule } from '@nebular/moment';
@@ -21,7 +21,8 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NotificationService } from './service/notification-service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NbThemeModule.forRoot(),
@@ -54,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     NbIconModule,
     HttpClientModule,
+    NbToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -62,7 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
   ],
-  providers: [StorageService, TranslateService],
+  providers: [StorageService, TranslateService, NbToastrService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

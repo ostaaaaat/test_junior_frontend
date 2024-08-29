@@ -27,7 +27,8 @@
         "clearBtn": "Clear filters",
         "tbName": "Name",
         "tbCreateDate": "Date and time of creation",
-        "tbDueDate": "Date and time of execution"
+        "tbDueDate": "Date and time of execution",
+        "notification": "Элемент выполнен"
     },
     "app": {
         "view": "Viewer",

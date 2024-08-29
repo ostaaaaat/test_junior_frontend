@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../service/storage-service';
 import { Task } from '../model/task';
-import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbDialogService, NbGlobalPosition, NbMenuItem, NbMenuService } from '@nebular/theme';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
+import { NbToastrService } from '@nebular/theme';
 import { map } from 'rxjs/operators';
+import { NotificationService } from '../service/notification-service';
 
 @Component({
   selector: 'app-view',
@@ -28,7 +31,10 @@ export class ViewComponent implements OnInit {
     dueDateTo: null
   }
 
-  constructor(private storageService: StorageService, private dialogService: NbDialogService, private nbMenuService: NbMenuService) {
+  constructor(private storageService: StorageService, private dialogService: NbDialogService, private nbMenuService: NbMenuService,
+    private toastrService: NbToastrService, private translate: TranslateService,
+    private notificationService: NotificationService) {
+    this.notificationService.init();
     this.allItems = storageService.getTasks();
     this.items = [...this.allItems];
     this.filterForm = new FormGroup({
@@ -75,6 +81,7 @@ export class ViewComponent implements OnInit {
       dueDateTo: null
     }
     this.items = [...this.allItems];
+
   }
 
   viewTask(task: Task) {
@@ -96,7 +103,6 @@ export class ViewComponent implements OnInit {
   }
 
   moveItemUp(i: number) {
-    console.log(i)
     if (i > 0) {
       let a = this.allItems[i];
       this.allItems[i] = this.allItems[i - 1];
