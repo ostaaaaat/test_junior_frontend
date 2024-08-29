@@ -1,24 +1,24 @@
 <nb-card>
-    <nb-card-header *ngIf="!readOnly">Добавить элемент</nb-card-header>
+    <nb-card-header *ngIf="!readOnly">{{ 'itemCard.header' | translate }}</nb-card-header>
     <nb-card-body>
         <form [formGroup]="taskForm">
             <div class="form-group">
-                <label for="name">Наименование</label>
-                <input nbInput id="name" name="name" placeholder="Введите наименование" formControlName="name" required>
+                <label for="name">{{ 'itemCard.name' | translate }}</label>
+                <input nbInput id="name" name="name" placeholder="{{ 'itemCard.phName' | translate }}" formControlName="name" required>
             </div>
             <div class="form-group">
-                <label for="duedate">Дата выполнения</label>
+                <label for="duedate">{{ 'itemCard.dueDate' | translate }}</label>
                 <input nbInput [nbDatepicker]="datepicker" formControlName="dueDate">
                 <nb-date-timepicker #datepicker format="DD-MM-yyyy HH:mm"></nb-date-timepicker>
             </div>
             <div class="form-group">
-                <label for="description">Описание</label>
-                <input nbInput id="description" name="description" placeholder="Введите описание"
+                <label for="description">{{ 'itemCard.description' | translate }}</label>
+                <input nbInput id="description" name="description" placeholder="{{ 'itemCard.phDescription' | translate }}"
                     formControlName="description">
             </div>
             <div class="button-group">
-                <button *ngIf="!readOnly" nbButton status="info" (click)="save()">Сохранить</button>
-                <button nbButton status="basic" (click)="close()">Отмена</button>
+                <button *ngIf="!readOnly" nbButton status="info" (click)="save()">{{ 'itemCard.saveBtn' | translate }}</button>
+                <button nbButton status="basic" (click)="close()">{{ 'itemCard.canselBtn' | translate }}</button>
             </div>
         </form>
     </nb-card-body>

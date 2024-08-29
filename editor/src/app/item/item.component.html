@@ -1,12 +1,12 @@
 <nb-card>
     <nb-card-header>{{ item.name }}</nb-card-header>
     <nb-card-body>
-      <p><strong>Дата создания:</strong> {{ item.createDate }}</p>
-      <p><strong>Дата выполнения:</strong> {{ item.dueDate }}</p>
-      <p><strong>Описание:</strong> {{ item.description }}</p>
+      <p><strong>{{ 'item.createDate' | translate }}</strong> {{ item.createDate }}</p>
+      <p><strong>{{ 'item.dueDate' | translate }}</strong> {{ item.dueDate }}</p>
+      <p><strong>{{ 'item.discription' | translate }}</strong> {{ item.description }}</p>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton status="success" class="action-button" (click)="copyItem()">Копировать</button>
-      <button nbButton status="danger" class="action-button" (click)="deleteItem()">Удалить</button>
+      <button nbButton status="success" class="action-button" (click)="copyItem()">{{ 'item.copyBtn' | translate }}</button>
+      <button nbButton status="danger" class="action-button" (click)="deleteItem()">{{ 'item.deleteBtn' | translate }}</button>
     </nb-card-footer>
   </nb-card>

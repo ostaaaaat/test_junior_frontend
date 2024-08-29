@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Task} from './model/task'
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,11 @@ import {Task} from './model/task'
 export class AppComponent {
   title = 'editor';
   
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('ru');
+  }
+
+  changeLanguage(language: string) {
+    this.translate.use(language);
+  }
 }

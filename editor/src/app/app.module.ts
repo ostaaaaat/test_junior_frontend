@@ -17,7 +17,15 @@ import { FormsModule } from '@angular/forms';
 import { StorageService } from './service/storage-service';
 import { NbMomentDateModule } from '@nebular/moment';
 import { ItemCardComponent } from './item-card/item-card.component';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -44,9 +52,17 @@ import { ItemCardComponent } from './item-card/item-card.component';
     NbContextMenuModule,
     NbMenuModule.forRoot(),
     FormsModule,
-    NbIconModule
+    NbIconModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
-  providers: [StorageService],
+  providers: [StorageService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

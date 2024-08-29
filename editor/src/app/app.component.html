@@ -1,10 +1,10 @@
 <nb-layout>
   <nb-layout-header fixed>
     <div class="header-content">
-      <button nbButton status="info" routerLink="/view">Просмотр</button>
-      <button nbButton status="info" routerLink="/edit">Редактор</button>
-      <button nbButton status="basic">РУС</button>
-      <button nbButton status="basic">ENG</button>
+      <button nbButton status="info" routerLink="/view">{{ 'app.view' | translate }}</button>
+      <button nbButton status="info" routerLink="/edit">{{ 'app.edit' | translate }}</button>
+      <button nbButton status="basic" (click)="changeLanguage('ru')">{{ 'app.ru' | translate }}</button>
+      <button nbButton status="basic" (click)="changeLanguage('en')">{{ 'app.en' | translate }}</button>
     </div>
   </nb-layout-header>
   <nb-layout-column>

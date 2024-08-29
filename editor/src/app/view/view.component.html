@@ -1,39 +1,39 @@
 <nb-layout>
     <nb-layout-column>
         <nb-card>
-            <nb-card-header>Список элементов</nb-card-header>
+            <nb-card-header>{{ 'view.header' | translate }}</nb-card-header>
             <nb-card-body>
                 <div class="filter-container" >
                     <form [formGroup]="filterForm">
                         <div class="filter-item">
-                            <label for="nameFilter">Наименование:</label>
-                            <input nbInput id="name" name="name" placeholder="Введите наименование" formControlName="name" required>
+                            <label for="nameFilter">{{ 'view.name' | translate }}</label>
+                            <input nbInput id="name" name="name" placeholder="{{ 'view.phName' | translate }}" formControlName="name" required>
                         </div>
     
                         <div class="filter-item">
-                            <label for="dateFrom">Дата выполнения с:</label>
+                            <label for="dateFrom">{{ 'view.dueDateFrom' | translate }}</label>
                             <input nbInput [nbDatepicker]="datepickerFrom" formControlName="dueDateFrom">
                             <nb-datepicker #datepickerFrom format="DD-MM-yyyy"></nb-datepicker>
                         </div>
     
                         <div class="filter-item">
-                            <label for="dateTo">Дата выполнения по:</label>
+                            <label for="dateTo">{{ 'view.dueDateTo' | translate }}</label>
                             <input nbInput [nbDatepicker]="datepickerTo" formControlName="dueDateTo">
                             <nb-datepicker #datepickerTo format="DD-MM-yyyy"></nb-datepicker>                    
                         </div>
                     </form>
                     <div class="filter-item">
                         <button nbButton (click)="clearForm()">
-                                    Очистить фильтры
+                            {{ 'view.clearBtn' | translate }}
                         </button>          
                     </div>
                 </div>
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th>Наименование</th>
-                            <th>Дата и время создания</th>
-                            <th>Дата и время выполнения</th>
+                            <th>{{ 'view.tbName' | translate }}</th>
+                            <th>{{ 'view.tbCreateDate' | translate }}</th>
+                            <th>{{ 'view.tbDueDate' | translate }}</th>
                             <th></th>
                         </tr>
                     </thead>

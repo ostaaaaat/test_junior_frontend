@@ -1,0 +1,37 @@
+{
+    "editBtn": "Add an item",
+    "item": {
+        "createDate": "Date of creation:",
+        "dueDate": "Date of execution:",
+        "description": "Description:",
+        "copyBtn": "Copy",
+        "deleteBtn": "Delete"
+    },
+    "itemCard": {
+        "header": "Add an item",
+        "name": "Name",
+        "phName": "Enter a name",
+        "dueDate": "Date of execution",
+        "description": "Description",
+        "phDescription": "Enter a description",
+        "saveBtn": "Save",
+        "canselBtn": "Cansel"
+    },
+    "view": {
+        "header": "List of item",
+        "name": "Name:",
+        "phName": "Enter a name",
+        "dueDateFrom": "Date of execution from:",
+        "dueDateTo": "Date of execution to:",
+        "clearBtn": "Clear filters",
+        "tbName": "Name",
+        "tbCreateDate": "Date and time of creation",
+        "tbDueDate": "Date and time of execution"
+    },
+    "app": {
+        "view": "Viewer",
+        "edit": "Editor",
+        "ru": "ru",
+        "en": "en"
+    }
+}
