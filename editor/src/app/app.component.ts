@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Task} from './model/task'
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({

@@ -43,9 +43,10 @@
                             <td (click)="viewTask(item)">{{ item.createDate }}</td>
                             <td (click)="viewTask(item)">{{ item.dueDate }}</td>
                             <td class="centered-button" >
-                                <button nbButton size="small" [nbContextMenu]="menuItems" nbContextMenuTag="{{i}}">
-                                    ˅
-                                </button>
+                                <nb-select placeholder="{{ 'view.move' | translate }}">
+                                    <nb-option (click)="moveItemUp(i)">{{ 'view.up' | translate }}</nb-option>
+                                    <nb-option (click)="moveItemDown(i)">{{ 'view.down' | translate }}</nb-option>
+                                </nb-select>
                             </td>
                         </tr>
                     </tbody>

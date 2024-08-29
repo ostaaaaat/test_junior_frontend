@@ -14,12 +14,16 @@
                 <label for="duedate">{{ 'itemCard.dueDate' | translate }}</label>
                 <input nbInput [nbDatepicker]="datepicker" formControlName="dueDate">
                 <nb-date-timepicker #datepicker format="DD-MM-yyyy HH:mm"></nb-date-timepicker>
+                <div *ngIf="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched" class="error">
+                    {{ 'itemCard.dateError' | translate }}
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">{{ 'itemCard.description' | translate }}</label>
                 <input nbInput id="description" name="description"
                     placeholder="{{ 'itemCard.phDescription' | translate }}" formControlName="description">
-                <div *ngIf="taskForm.controls['description'].invalid && taskForm.controls['description'].touched" class="error">
+                <div *ngIf="taskForm.controls['description'].invalid && taskForm.controls['description'].touched"
+                    class="error">
                     {{ 'itemCard.error' | translate }}
                 </div>
             </div>

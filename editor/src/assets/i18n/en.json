@@ -1,5 +1,8 @@
 {
     "editBtn": "Add an item",
+    "notification": "Timeout of item: ",
+    "dueDate": "Execution on: ",
+    "description": "Description: ", 
     "item": {
         "createDate": "Date of creation:",
         "dueDate": "Date of execution:",
@@ -16,7 +19,8 @@
         "phDescription": "Enter a description",
         "saveBtn": "Save",
         "canselBtn": "Cansel",
-        "error" : "The input field can't be empty"
+        "error" : "The input field can't be empty",
+        "dateError": "Invalid date"
     },
     "view": {
         "header": "List of item",
@@ -28,7 +32,9 @@
         "tbName": "Name",
         "tbCreateDate": "Date and time of creation",
         "tbDueDate": "Date and time of execution",
-        "notification": "Элемент выполнен"
+        "move": "Move",
+        "up": "Up",
+        "down": "Down"
     },
     "app": {
         "view": "Viewer",

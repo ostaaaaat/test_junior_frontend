@@ -3,13 +3,14 @@ import { NbToastrService } from "@nebular/theme";
 import { Task } from "../model/task";
 import { StorageService } from "./storage-service";
 import * as moment from "moment";
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationService {
 
-    constructor(private toastrService: NbToastrService, private storageService: StorageService) { }
+    constructor(private toastrService: NbToastrService, private translate: TranslateService, private storageService: StorageService) { }
 
     firedTasks: Task[] = [];
 
@@ -19,9 +20,12 @@ export class NotificationService {
                 .filter(task => !this.firedTasks.includes(task))
                 .filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isBefore(moment()))
                 .forEach(task => {
-                    console.log(task)
-                    console.log(this.firedTasks)
-                    this.toastrService.danger('Вышло время для задачи ' + task.name);
+                    this.translate.get(['notification', 'dueDate', 'description']).subscribe(translations => {
+                        const notificationMessage = `${translations['notification']} ${task.name}
+                        \n${translations['dueDate']} ${task.dueDate}
+                        \n${translations['description']} ${task.description}`;
+                        this.toastrService.info(notificationMessage);
+                    });
                     this.firedTasks.push(task);
                 })
         }, 1000);

@@ -12,7 +12,8 @@ import { NbThemeModule, NbLayoutModule, NbButtonModule,
   NbDialogModule, NbDatepickerModule, NbTimepickerModule, 
   NbCardModule, NbInputModule, NbContextMenuModule,
   NbMenuModule, 
-  NbIconModule, NbToastrModule, NbToastrService} from '@nebular/theme';
+  NbIconModule, NbToastrModule, NbToastrService,
+  NbSelectModule} from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { StorageService } from './service/storage-service';
 import { NbMomentDateModule } from '@nebular/moment';
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbMenuModule.forRoot(),
     FormsModule,
     NbIconModule,
+    NbSelectModule,
     HttpClientModule,
     NbToastrModule.forRoot(),
     TranslateModule.forRoot({

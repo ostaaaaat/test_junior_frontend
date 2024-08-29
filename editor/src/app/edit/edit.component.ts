@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { Task } from '../model/task';
 import { StorageService } from '../service/storage-service';

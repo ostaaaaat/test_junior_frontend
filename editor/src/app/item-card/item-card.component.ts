@@ -47,7 +47,10 @@ export class ItemCardComponent {
     this._readOnly = false;
 
     this.taskForm = new FormGroup({
-      dueDate: new FormControl<moment.Moment>(moment()),
+      dueDate: new FormControl<moment.Moment>(moment(), [
+        Validators.required,
+        this.minDateValidator.bind(this)
+      ]),
       name: new FormControl('',  [
         Validators.required,
       ]),
@@ -59,6 +62,16 @@ export class ItemCardComponent {
 
   taskForm: FormGroup
 
+  minDateValidator(control: FormControl): { [key: string]: boolean } | null {
+    const selectedDateTime = control.value;
+    const now = moment();
+  
+    if (selectedDateTime && moment(selectedDateTime).isBefore(now)) {
+      return { 'minDateTime': true };
+    }
+  
+    return null;
+  }
 
   save() {
     if (this.taskForm.invalid) {

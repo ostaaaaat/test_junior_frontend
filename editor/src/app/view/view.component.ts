@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StorageService } from '../service/storage-service';
 import { Task } from '../model/task';
-import { NbDialogService, NbGlobalPosition, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbDialogService, NbMenuService } from '@nebular/theme';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { NbToastrService } from '@nebular/theme';
-import { map } from 'rxjs/operators';
 import { NotificationService } from '../service/notification-service';
 
 @Component({
@@ -15,14 +14,9 @@ import { NotificationService } from '../service/notification-service';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.css']
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent {
   items: Task[] = [];
   allItems: Task[] = [];
-
-  menuItems: NbMenuItem[] = [
-    { title: 'Вверх', data: 'up' },
-    { title: 'Вниз', data: 'down' },
-  ];
 
   filterForm: FormGroup;
   filters = {
@@ -94,14 +88,6 @@ export class ViewComponent implements OnInit {
     });
   }
 
-  onMenuItemClick(action: string, i: number) {
-    if (action === 'up') {
-      this.moveItemUp(i);
-    } else if (action === 'down') {
-      this.moveItemDown(i);
-    }
-  }
-
   moveItemUp(i: number) {
     if (i > 0) {
       let a = this.allItems[i];
@@ -119,12 +105,5 @@ export class ViewComponent implements OnInit {
       this.applyFilters()
     }
   }
-
-  ngOnInit() {
-    this.nbMenuService.onItemClick()
-      .subscribe(event => this.onMenuItemClick(event.item.data, Number(event.tag)));
-  }
-
-
 
 }

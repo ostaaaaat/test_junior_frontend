@@ -10,27 +10,27 @@ export class StorageService {
 
   tasks: Task[] = [{
     name: 'Элемент 1',
-    createDate: '22-12-2022 00:10',
-    dueDate: '22-12-2022 00:10',
+    createDate: '22-08-2024 20:10',
+    dueDate: '22-08-2024 20:20',
     description: 'Описание элемента 1'
   },
   {
     name: 'Элемент 12',
-    createDate: new Date('2024-01-01').toDateString(),
-    dueDate: new Date('2024-02-01').toDateString(),
-    description: 'Описание элемента 1'
+    createDate: '22-08-2024 10:10',
+    dueDate: '22-08-2024 10:20',
+    description: 'Описание элемента 12'
   },
   {
     name: 'Элемент 13',
-    createDate: new Date('2024-01-01').toDateString(),
-    dueDate: new Date('2024-02-01').toDateString(),
-    description: 'Описание элемента 1'
+    createDate: '22-08-2024 14:10',
+    dueDate: '22-08-2024 15:10',
+    description: 'Описание элемента 13'
   },
   {
     name: 'Элемент 14',
-    createDate: new Date('2024-01-01').toDateString(),
-    dueDate: new Date('2024-02-01').toDateString(),
-    description: 'Описание элемента 1'
+    createDate: '22-08-2024 12:10',
+    dueDate: '22-08-2024 13:10',
+    description: 'Описание элемента 14'
   },];
 
   public getTasks(): Task[] {
