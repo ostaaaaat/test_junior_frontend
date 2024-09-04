@@ -4,40 +4,35 @@ import { Task } from '../model/task';
 @Injectable({
   providedIn: 'root'
 })
+
 export class StorageService {
 
-  constructor() { }
+  private storageKey = 'tasks';
 
-  tasks: Task[] = [{
-    name: 'Элемент 1',
-    createDate: '22-08-2024 20:10',
-    dueDate: '22-08-2024 20:20',
-    description: 'Описание элемента 1'
-  },
-  {
-    name: 'Элемент 12',
-    createDate: '22-08-2024 10:10',
-    dueDate: '22-08-2024 10:20',
-    description: 'Описание элемента 12'
-  },
-  {
-    name: 'Элемент 13',
-    createDate: '22-08-2024 14:10',
-    dueDate: '22-08-2024 15:10',
-    description: 'Описание элемента 13'
-  },
-  {
-    name: 'Элемент 14',
-    createDate: '22-08-2024 12:10',
-    dueDate: '22-08-2024 13:10',
-    description: 'Описание элемента 14'
-  },];
-
-  public getTasks(): Task[] {
-    return this.tasks;
+  constructor() {
+    if (!localStorage.getItem(this.storageKey)) {
+      this.saveTasks(this.tasks);
+    }
   }
 
-  public updateTasks(tasks: Task[]) {
-    this.tasks = tasks;
+  tasks: Task[] = [];
+
+  public getTasks(): Task[] {
+    const tasksJson = localStorage.getItem(this.storageKey);
+    return tasksJson ? JSON.parse(tasksJson) : [];
+  }
+
+  public saveTasks(tasks: Task[]): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(tasks));
+  }
+
+  public addTasks(task: Task): void {
+    const tasks = this.getTasks();
+    tasks.push(task);
+    this.saveTasks(tasks);
+  }
+
+  public updateTasks(tasks: Task[]): void {
+    this.saveTasks(tasks);
   }
 }

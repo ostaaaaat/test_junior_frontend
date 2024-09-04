@@ -3,6 +3,7 @@ import { NbDialogService } from '@nebular/theme';
 import { Task } from '../model/task';
 import { StorageService } from '../service/storage-service';
 import { ItemCardComponent } from '../item-card/item-card.component';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -12,10 +13,12 @@ import { ItemCardComponent } from '../item-card/item-card.component';
 })
 
 export class EditComponent {
-  items: Task[] = [];
+  private itemsSubject = new BehaviorSubject<Task[]>([]);
+  items$ = this.itemsSubject.asObservable();
 
-  constructor(private dialogService: NbDialogService, private storageSerice: StorageService) {
-    this.items = storageSerice.getTasks();
+  constructor(private dialogService: NbDialogService, private storageService: StorageService) {
+    const tasks = this.storageService.getTasks();
+    this.itemsSubject.next(tasks);
   }
 
   openAddItemDialog() {
@@ -23,16 +26,26 @@ export class EditComponent {
       context: {
         readOnly: false
       }
+    }).onClose.subscribe((newItem: Task) => {
+      if (newItem) {
+        const currentItems = this.itemsSubject.getValue();
+        const newItems = [...currentItems, newItem];
+        this.itemsSubject.next(newItems);
+        this.storageService.updateTasks(this.itemsSubject.getValue());
+      }
     });
   }
 
-  handleCopy(item: any) {
-    const newItem = { ...item, name: `${item.name} (копия)` };
-    this.items.push(newItem);
+  handleCopy(item: Task) {
+    const newItem = { ...item,  id: Task.uuid(), name: `${item.name} (копия)` };
+    const currentItems = this.itemsSubject.getValue();
+    this.itemsSubject.next([...currentItems, newItem]);
+    this.storageService.updateTasks(this.itemsSubject.getValue());
   }
 
-  handleDelete(item: any) {
-    this.items = this.items.filter(i => i !== item);
-    this.storageSerice.updateTasks(this.items)
+  handleDelete(id: string) {
+    const updatedItems = this.itemsSubject.getValue().filter(i => i.id !== id);
+    this.itemsSubject.next(updatedItems);
+    this.storageService.updateTasks(updatedItems);
   }
 }

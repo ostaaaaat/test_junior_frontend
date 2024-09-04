@@ -1,15 +1,14 @@
 <nb-layout>
-    <nb-layout-column>
-      <div>
-        <button nbButton status="info" (click)="openAddItemDialog()">{{ 'editBtn' | translate }}</button>
-      </div>
-      <div class="item-list">
-        <app-item
-          *ngFor="let item of items"
-          [item]="item"
-          (copy)="handleCopy($event)"
-          (delete)="handleDelete($event)">
-        </app-item>
-      </div>
-    </nb-layout-column>
-  </nb-layout>
+  <nb-layout-column>
+    <div>
+      <button nbButton status="info" (click)="openAddItemDialog()">{{ 'editBtn' | translate }}</button>
+    </div>
+    <div class="item-list">
+      <app-item 
+        *ngFor="let item of items$ | async" [item]="item" 
+        (copy)="handleCopy($event)"
+        (delete)="handleDelete($event)">
+      </app-item>
+    </div>
+  </nb-layout-column>
+</nb-layout>

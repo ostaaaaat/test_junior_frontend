@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { NbToastrService } from "@nebular/theme";
-import { Task } from "../model/task";
 import { StorageService } from "./storage-service";
 import * as moment from "moment";
 import { TranslateService } from '@ngx-translate/core';
@@ -12,12 +11,12 @@ export class NotificationService {
 
     constructor(private toastrService: NbToastrService, private translate: TranslateService, private storageService: StorageService) { }
 
-    firedTasks: Task[] = [];
+    firedTasks: string[] = [];
 
     init() {
         setInterval(() => {
             this.storageService.getTasks()
-                .filter(task => !this.firedTasks.includes(task))
+                .filter(task => !this.firedTasks.includes(task.id))
                 .filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isBefore(moment()))
                 .forEach(task => {
                     this.translate.get(['notification', 'dueDate', 'description']).subscribe(translations => {
@@ -26,7 +25,7 @@ export class NotificationService {
                         \n${translations['description']} ${task.description}`;
                         this.toastrService.info(notificationMessage);
                     });
-                    this.firedTasks.push(task);
+                    this.firedTasks.push(task.id);
                 })
         }, 1000);
     }

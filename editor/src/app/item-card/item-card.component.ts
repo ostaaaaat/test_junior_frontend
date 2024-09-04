@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./item-card.component.css']
 })
 export class ItemCardComponent {
-  
+
   private _readOnly: boolean;
   @Input()
   set readOnly(readOnly: boolean) {
@@ -51,10 +51,10 @@ export class ItemCardComponent {
         Validators.required,
         this.minDateValidator.bind(this)
       ]),
-      name: new FormControl('',  [
+      name: new FormControl<string | null>(null, [
         Validators.required,
       ]),
-      description: new FormControl('', [
+      description: new FormControl<string | null>(null, [
         Validators.required,
       ])
     });
@@ -65,11 +65,11 @@ export class ItemCardComponent {
   minDateValidator(control: FormControl): { [key: string]: boolean } | null {
     const selectedDateTime = control.value;
     const now = moment();
-  
+
     if (selectedDateTime && moment(selectedDateTime).isBefore(now)) {
       return { 'minDateTime': true };
     }
-  
+
     return null;
   }
 
@@ -78,18 +78,14 @@ export class ItemCardComponent {
       this.taskForm.markAllAsTouched();
       return;
     }
-    let task: Task = {
-      name: this.taskForm.value.name!,
-      createDate: moment().format('DD.MM.yyyy HH:mm'),
-      dueDate: moment(this.taskForm.value.dueDate).format('DD.MM.yyyy HH:mm'),
-      description: this.taskForm.value.description!
-    }
-    let tasks = this.storageService.getTasks();
-    tasks.push(task);
-    this.storageService.updateTasks(tasks);
-    this.dialogRef.close();
-    console.log('task:', this.taskForm.value.dueDate);
-    this.readOnly = false;
+    let task: Task = new Task ( 
+      Task.uuid(),
+      this.taskForm.value.name, 
+      moment().format('DD.MM.yyyy HH:mm'),
+      moment(this.taskForm.value.dueDate).format('DD.MM.yyyy HH:mm'),
+      this.taskForm.value.description!
+  );
+    this.dialogRef.close(task);
   }
 
   close() {

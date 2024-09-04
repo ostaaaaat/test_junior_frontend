@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { StorageService } from '../service/storage-service';
 import { Task } from '../model/task';
-import { NbDialogService, NbMenuService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { ItemCardComponent } from '../item-card/item-card.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-import { TranslateService } from '@ngx-translate/core';
-import { NbToastrService } from '@nebular/theme';
 import { NotificationService } from '../service/notification-service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-view',
@@ -15,66 +14,45 @@ import { NotificationService } from '../service/notification-service';
   styleUrls: ['./view.component.css']
 })
 export class ViewComponent {
-  items: Task[] = [];
+
+  private itemsSubject = new BehaviorSubject<Task[]>([]);
+  items$ = this.itemsSubject.asObservable();
+
   allItems: Task[] = [];
-
   filterForm: FormGroup;
-  filters = {
-    name: null,
-    dueDateFrom: null,
-    dueDateTo: null
-  }
 
-  constructor(private storageService: StorageService, private dialogService: NbDialogService, private nbMenuService: NbMenuService,
-    private toastrService: NbToastrService, private translate: TranslateService,
-    private notificationService: NotificationService) {
+  constructor(private storageService: StorageService, private dialogService: NbDialogService, private notificationService: NotificationService) {
     this.notificationService.init();
     this.allItems = storageService.getTasks();
-    this.items = [...this.allItems];
+    this.itemsSubject.next([...this.allItems]);
+
     this.filterForm = new FormGroup({
-      name: new FormControl(null),
+      name: new FormControl<string | null>(null),
       dueDateFrom: new FormControl<moment.Moment | null>(null),
       dueDateTo: new FormControl<moment.Moment | null>(null)
     });
-    this.filterForm.get('name')?.valueChanges.subscribe(val => {
-      this.filters.name = val;
-      this.applyFilters();
-    });
-    this.filterForm.get('dueDateFrom')?.valueChanges.subscribe(val => {
-      this.filters.dueDateFrom = val;
-      this.applyFilters();
-    });
-    this.filterForm.get('dueDateTo')?.valueChanges.subscribe(val => {
-      this.filters.dueDateTo = val;
-      this.applyFilters();
+    this.filterForm.valueChanges.subscribe(value => {
+      this.filterBy();
     });
   }
 
-  applyFilters() {
-    this.items = [...this.allItems]
-    if (this.filters.name) {
-      this.items = this.items.filter(task => task.name.includes(this.filters.name!))
+  filterBy() {
+    let filteredItems = [...this.allItems];
+    if (this.filterForm.value.name) {
+      filteredItems = filteredItems.filter(task => task.name.includes(this.filterForm.value.name!));
     }
-    if (this.filters.dueDateFrom) {
-      this.items = this.items.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isAfter(this.filters.dueDateFrom))
+    if (this.filterForm.value.dueDateFrom) {
+      filteredItems = filteredItems.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isAfter(this.filterForm.value.dueDateFrom!));
     }
-    if (this.filters.dueDateTo) {
-      this.items = this.items.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isBefore(this.filters.dueDateTo));
+    if (this.filterForm.value.dueDateTo) {
+      filteredItems = filteredItems.filter(task => moment(task.dueDate, 'DD.MM.yyyy HH:mm').isBefore(this.filterForm.value.dueDateTo!));
     }
+    this.itemsSubject.next(filteredItems);
   }
 
   clearForm() {
-    this.filterForm.setValue({
-      name: null,
-      dueDateFrom: null,
-      dueDateTo: null
-    })
-    this.filters = {
-      name: null,
-      dueDateFrom: null,
-      dueDateTo: null
-    }
-    this.items = [...this.allItems];
+    this.filterForm.reset();
+    this.itemsSubject.next([...this.allItems]);
 
   }
 
@@ -93,7 +71,7 @@ export class ViewComponent {
       let a = this.allItems[i];
       this.allItems[i] = this.allItems[i - 1];
       this.allItems[i - 1] = a;
-      this.applyFilters()
+      this.filterBy()
     }
   }
 
@@ -102,7 +80,7 @@ export class ViewComponent {
       let a = this.allItems[i];
       this.allItems[i] = this.allItems[i + 1];
       this.allItems[i + 1] = a;
-      this.applyFilters()
+      this.filterBy()
     }
   }
 

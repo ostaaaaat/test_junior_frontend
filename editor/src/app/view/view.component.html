@@ -3,30 +3,31 @@
         <nb-card>
             <nb-card-header>{{ 'view.header' | translate }}</nb-card-header>
             <nb-card-body>
-                <div class="filter-container" >
+                <div class="filter-container">
                     <form [formGroup]="filterForm">
                         <div class="filter-item">
                             <label for="nameFilter">{{ 'view.name' | translate }}</label>
-                            <input nbInput id="name" name="name" placeholder="{{ 'view.phName' | translate }}" formControlName="name" required>
+                            <input nbInput id="name" name="name" placeholder="{{ 'view.phName' | translate }}"
+                                formControlName="name" required>
                         </div>
-    
+
                         <div class="filter-item">
                             <label for="dateFrom">{{ 'view.dueDateFrom' | translate }}</label>
                             <input nbInput [nbDatepicker]="datepickerFrom" formControlName="dueDateFrom">
                             <nb-datepicker #datepickerFrom format="DD-MM-yyyy"></nb-datepicker>
                         </div>
-    
+
                         <div class="filter-item">
                             <label for="dateTo">{{ 'view.dueDateTo' | translate }}</label>
                             <input nbInput [nbDatepicker]="datepickerTo" formControlName="dueDateTo">
-                            <nb-datepicker #datepickerTo format="DD-MM-yyyy"></nb-datepicker>                    
+                            <nb-datepicker #datepickerTo format="DD-MM-yyyy"></nb-datepicker>
                         </div>
                     </form>
                 </div>
                 <div>
                     <button nbButton (click)="clearForm()">
                         {{ 'view.clearBtn' | translate }}
-                    </button>        
+                    </button>
                 </div>
                 <table class="custom-table">
                     <thead>
@@ -38,11 +39,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of items; index  as i" >
+                        <tr *ngFor="let item of items$ | async; index as i">
                             <td (click)="viewTask(item)">{{ item.name }}</td>
                             <td (click)="viewTask(item)">{{ item.createDate }}</td>
                             <td (click)="viewTask(item)">{{ item.dueDate }}</td>
-                            <td class="centered-button" >
+                            <td class="centered-button">
                                 <nb-select placeholder="{{ 'view.move' | translate }}">
                                     <nb-option (click)="moveItemUp(i)">{{ 'view.up' | translate }}</nb-option>
                                     <nb-option (click)="moveItemDown(i)">{{ 'view.down' | translate }}</nb-option>
